@@ -4,6 +4,74 @@ The golden template design for Kubernetes represents a comprehensive blueprint f
 ## Standardization Approach
 Standardization begins with infrastructure specifications that define the minimum viable platform requirements. The control plane components require careful sizing with enough headroom for growth while remaining cost-effective. Worker nodes follow similar patterns but with more emphasis on workload-specific requirements. This standardization extends to networking configurations, where service mesh implementation, ingress controllers, and CNI choices are predefined to ensure consistent behavior across all deployments.
 
+## Template Structure
+
+```
+templates/
+├── base/
+│   ├── control-plane.yaml.tmpl
+│   ├── node-pools.yaml.tmpl
+│   └── networking.yaml.tmpl
+├── addons/
+│   ├── monitoring.yaml.tmpl
+│   ├── security.yaml.tmpl
+│   └── storage.yaml.tmpl
+├── profiles/
+│   ├── production.yaml
+│   ├── development.yaml
+│   └── edge.yaml
+└── values/
+    ├── default.yaml
+    └── custom/
+        ├── team-a.yaml
+        └── team-b.yaml
+```
+
+## Example base template:
+
+```yaml
+# control-plane.yaml.tmpl
+apiVersion: v1alpha1
+kind: ControlPlane
+metadata:
+  name: {{ .Values.name }}
+spec:
+  nodes: {{ .Values.controlPlane.nodes | default 3 }}
+  components:
+  {{- range .Values.controlPlane.components }}
+    - {{ . }}
+  {{- end }}
+  {{- if .Values.highAvailability }}
+  zones:
+  {{- range .Values.zones }}
+    - {{ . }}
+  {{- end }}
+  {{- end }}
+```
+
+Values file:
+
+```yaml
+# production.yaml
+name: prod-cluster
+controlPlane:
+  nodes: 5
+  components:
+    - apiServer
+    - etcd
+    - scheduler
+highAvailability: true
+zones:
+  - zone-a
+  - zone-b
+```
+
+This enables:
+- Template reuse
+- Environment-specific customization
+- Consistent base configurations
+- Easy modifications via values files
+
 ## Base Infrastructure Configuration
 
 ```yaml
