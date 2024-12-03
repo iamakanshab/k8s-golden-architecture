@@ -4,6 +4,13 @@ The golden template design for Kubernetes represents a comprehensive blueprint f
 ## Standardization Approach
 Standardization begins with infrastructure specifications that define the minimum viable platform requirements. The control plane components require careful sizing with enough headroom for growth while remaining cost-effective. Worker nodes follow similar patterns but with more emphasis on workload-specific requirements. This standardization extends to networking configurations, where service mesh implementation, ingress controllers, and CNI choices are predefined to ensure consistent behavior across all deployments.
 
+## Common Patterns
+1. Single-zone Development: Simplified setup with single control plane
+2. Edge Computing: Multiple small clusters at edge locations
+3. Hybrid Cloud: Clusters spanning private/public clouds
+4. Air-gapped: Fully isolated environment with local registries
+5. Managed Service: Cloud provider-operated control plane (EKS, GKE, AKS)
+
 ## Template Structure
 
 ```
