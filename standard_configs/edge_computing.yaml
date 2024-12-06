@@ -1,0 +1,28 @@
+apiVersion: v1alpha1
+kind: ClusterTemplate
+metadata:
+  name: edge-cluster
+spec:
+  controlPlane:
+    lightweight: true
+    components:
+      - k3s
+      
+  edgeConfig:
+    syncInterval: 5m
+    offlineOperation: true
+    localCache: true
+    
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+    
+  networking:
+    serviceCIDR: "10.96.0.0/12"
+    podCIDR: "10.244.0.0/16"
+    cni: flannel
+    
+  security:
+    minimal: true
+    encryption: true
