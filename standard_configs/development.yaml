@@ -1,0 +1,26 @@
+apiVersion: v1alpha1
+kind: ClusterTemplate
+metadata:
+  name: dev-single-zone
+spec:
+  controlPlane:
+    nodes: 1
+    components:
+      - apiServer
+      - etcd
+      - controllerManager
+      - scheduler
+    
+  devTools:
+    cicd: jenkins
+    registry: harbor
+    gitOps: argocd
+    
+  networking:
+    serviceCIDR: "10.96.0.0/12"
+    podCIDR: "10.244.0.0/16"
+    cni: flannel
+    
+  monitoring:
+    stack: prometheus-operator
+    retention: 7d
