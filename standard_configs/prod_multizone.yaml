@@ -1,0 +1,41 @@
+# Production Multi-Zone Template
+apiVersion: v1alpha1
+kind: ClusterTemplate
+metadata:
+  name: prod-multi-zone
+spec:
+  controlPlane:
+    zones:
+      - name: zone-a
+        components:
+          - apiServer
+          - etcd
+          - controllerManager
+          - scheduler
+      - name: zone-b
+        components:
+          - apiServer
+          - etcd
+          - controllerManager
+          - scheduler
+    
+  networking:
+    serviceCIDR: "10.96.0.0/12"
+    podCIDR: "10.244.0.0/16"
+    cni: calico
+    
+  monitoring:
+    stack: prometheus-operator
+    retention: 30d
+    alerting: true
+    
+  security:
+    rbac: true
+    networkPolicies: true
+    podSecurityStandards: restricted
+    
+  storage:
+    class: premium-ssd
+    backup:
+      enabled: true
+      retention: 30d
