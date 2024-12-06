@@ -176,5 +176,3 @@ securityControls:
     - developer
     - readonly
 ```
-
-Need specific configuration details for any component?
