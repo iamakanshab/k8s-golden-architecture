@@ -19,3 +19,19 @@ scrape_configs:
           - 'bare-metal-node1.example.com:9091' # Pushgateway URL
           - 'bare-metal-node2.example.com:9091'
 ```
+###   Centralizing configurations within git repositories
+
+```
+/k8s-config
+├── base/
+│   ├── namespaces.yaml
+│   ├── rbac.yaml
+│   ├── resource-quotas.yaml
+│   └── network-policies.yaml
+├── overlays/
+│   ├── prod/
+│   └── dev/
+└── apps/
+    ├── app1/
+    └── app2/
+```
