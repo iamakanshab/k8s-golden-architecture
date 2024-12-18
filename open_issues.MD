@@ -1,4 +1,9 @@
-# We must not open any ports on bare-metal servers, as such a hybrid push-pull approach might be optimal to work around this.
+# Problem Solving
+### We must not open any ports on bare-metal servers, as such a hybrid push-pull approach might be optimal to work around this.
+
+### Solution
+• Use pull for cloud environments where service discovery is easier.
+Use push for bare-metal nodes to avoid opening ports unnecessarily.
 ```
 global:
   scrape_interval: 15s
